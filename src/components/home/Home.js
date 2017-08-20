@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input } from 'antd'
+import { Button } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Copyright from './copyright'
@@ -18,12 +18,13 @@ const Logo = styled.h1`
   font-family: 'Luckiest Guy';
   color: white;
   font-size: 7rem;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `
 
 const Description = styled.p`
   font-family: 'Kanit';
-  font-size: 1.5rem;
-  width: 65%;
+  font-size: 1.2rem;
+  width: 60%;
   margin: 2rem auto;
 `
 const MarginItem = styled.div`
@@ -34,13 +35,26 @@ const InputName = styled.div`
   margin: 2rem auto;
 `
 
+const CopyrightPosition = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.7rem;
+  background-color: #efefef;
+  text-align: center;
+`
+
 const Home = () => (
   <Layout>
     <div>
       <Logo>IPA Quiz</Logo>
-      <Description>ยินดีต้องรับสู่ IPA Quiz แบบทดสอบอ่าน IPA แล้วเขียนเป็นคำในภาษาอังกฤษ มาดูกันว่าคุณจะทำได้กี่คะแนน พร้อมแล้วใส่ชื่อของคุณแล้วก็เริ่มทดสอบได้เลย</Description>
+      <Description>
+        ยินดีต้องรับสู่ IPA Quiz แบบทดสอบอ่าน IPA แล้วเขียนเป็นคำในภาษาอังกฤษ
+        มาดูกันว่าคุณจะทำได้กี่คะแนน พร้อมแล้วใส่ชื่อของคุณแล้วก็เริ่มทดสอบได้เลย
+      </Description>
       <InputName>
-        <Input size="large" placeholder="ชื่อของท่าน" />
+        <input type="text" />
       </InputName>
       <MarginItem>
         <Button size="large">
@@ -50,7 +64,9 @@ const Home = () => (
         </Button>
       </MarginItem>
     </div>
-    <Copyright />
+    <CopyrightPosition>
+      <Copyright />
+    </CopyrightPosition>
   </Layout>
 )
 
