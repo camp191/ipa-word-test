@@ -16,7 +16,11 @@ const Copyright = () => (
       </Emojify>
     and
       <ReactStyle>
-        <img style={{ width: '45', verticalAlign: 'middle', paddingBottom: '5px', paddingLeft: '-20px' }} src={ReactIcon} alt="" />
+        <img 
+          style={{ width: '45px', verticalAlign: 'middle', paddingBottom: '5px', paddingLeft: '-20px' }}
+          src={ReactIcon}
+          alt="react logo"
+        />
       </ReactStyle>
     </p>
   </div>

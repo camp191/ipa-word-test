@@ -1,8 +1,10 @@
-import React from 'react'
-import { Button, Input } from 'antd'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
+import { Button, Input, Modal } from 'antd'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Copyright from './copyright'
+import * as Actions from './../../actions'
 
 const Layout = styled.div`
   width:100%;
@@ -31,6 +33,7 @@ const Description = styled.p`
   font-family: 'Kanit';
   font-size: 1.2rem;
   width: 60%;
+  max-width: 700px;
   margin: 2rem auto;
   @media only screen and (max-width: 500px) {
     width: 90%;
@@ -59,29 +62,76 @@ const CopyrightPosition = styled.div`
   text-align: center;
 `
 
-const Home = () => (
-  <Layout>
-    <div>
-      <Logo>IPA Quiz</Logo>
-      <Description>
-        ยินดีต้อนรับสู่ IPA Quiz แบบทดสอบอ่าน IPA แล้วเขียนเป็นคำในภาษาอังกฤษ
-        มาดูกันว่าคุณจะทำได้กี่คะแนน พร้อมแล้วใส่ชื่อของคุณแล้วก็เริ่มทดสอบได้เลย
-      </Description>
-      <InputName>
-        <Input size="large" placeholder="ใส่ชื่อของคุณ" />
-      </InputName>
-      <MarginItem>
-        <Button size="large">
-          <Link to="/quiz">
-            Start the Quiz !!
-          </Link>
-        </Button>
-      </MarginItem>
-    </div>
-    <CopyrightPosition>
-      <Copyright />
-    </CopyrightPosition>
-  </Layout>
-)
+// const ErrorMessage = () => {
+//   Modal.error({
+//     title: 'กรุณาใส่ชื่อ',
+//     content: 'กรุณาใส่ชื่อของคุณก่อนเร่ิมทำแบบทดสอบ',
+//     okText: 'OK',
+//   })
+// }
 
-export default Home
+class Home extends Component {
+  constructor() {
+    super()
+    this.state = {
+      name: '',
+      button: 'Start the Quiz!!',
+      loading: false,
+    }
+
+    this.updateName = this.updateName.bind(this)
+    this.clickStart = this.clickStart.bind(this)
+  }
+
+  updateName(value) {
+    this.setState({
+      name: value,
+    })
+  }
+
+  clickStart() {
+    this.setState({
+      loading: true,
+      button: 'Loading...',
+    })
+    this.props.regisName(this.state.name)
+  }
+
+  render() {
+    return (
+      <Layout>
+        <Logo>IPA Quiz</Logo>
+        <Description>
+          ยินดีต้อนรับสู่ IPA Quiz แบบทดสอบอ่าน IPA แล้วเขียนเป็นคำในภาษาอังกฤษ
+          มาดูกันว่าคุณจะทำได้กี่คะแนน พร้อมแล้วใส่ชื่อของคุณแล้วก็เริ่มทดสอบได้เลย
+        </Description>
+        <InputName>
+          <Input
+            size="large"
+            placeholder="ใส่ชื่อของคุณ"
+            value={this.state.name}
+            onChange={event => this.updateName(event.target.value)}
+          />
+        </InputName>
+        <MarginItem>
+          <Button
+            size="large"
+            onClick={() => this.clickStart()}
+            loading={this.state.loading}
+            disabled={this.state.loading}
+          >
+            <Link to="/quiz">
+              {this.state.button}
+            </Link>
+          </Button>
+        </MarginItem>
+        <CopyrightPosition>
+          <Copyright />
+        </CopyrightPosition>
+      </Layout>
+    )
+  }
+}
+
+export default connect(null, Actions)(Home)
+
