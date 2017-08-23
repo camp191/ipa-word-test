@@ -1,16 +1,45 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import Header from './Header'
+import Question from './Question'
+import Copyright from './../home/copyright'
 
-const QuizMain = props => (
-  <div>
-    <h1>Hello {props.users.user}</h1>
-  </div>
-)
+import * as Actions from './../../actions'
 
-function mapStateToProps({ users }) {
-  return {
-    users,
+class QuizMain extends Component {
+  componentDidMount() {
+    this.props.fetchWordData()
+  }
+
+  render() {
+    // if (this.props.users.user === '') {
+    //   return <Redirect to="/" />
+    // }
+
+    return (
+      <div>
+        <Header />
+        <h1>Hello {this.props.users.user}</h1>
+        <Question wordData={this.props.word} />
+        <Copyright />
+      </div>
+    )
   }
 }
 
-export default connect(mapStateToProps)(QuizMain)
+function mapStateToProps({ users, word }) {
+  return {
+    users,
+    word,
+  }
+}
+
+QuizMain.propTypes = {
+  fetchWordData: PropTypes.func,
+  users: PropTypes.object,
+  word: PropTypes.object,
+}
+
+export default connect(mapStateToProps, Actions)(QuizMain)
