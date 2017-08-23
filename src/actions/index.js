@@ -13,7 +13,7 @@ export const regisName = name => ({
 
 export const fetchWordData = () => (dispatch) => {
   const randomWord = RandomWord()
-  const request = axios.get('http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=grandmother')
+  const request = axios.get(`http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=${randomWord}`)
   dispatch({
     type: FETCH_WORD,
     payload: request,
