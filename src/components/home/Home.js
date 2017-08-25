@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button, Input } from 'antd'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import Copyright from './copyright'
@@ -77,6 +76,7 @@ class Home extends Component {
       button: 'Loading...',
     })
     this.props.regisName(this.state.name)
+    this.props.history.push('/quiz')
   }
 
   render() {
@@ -91,8 +91,10 @@ class Home extends Component {
           <Input
             size="large"
             placeholder="ใส่ชื่อของคุณ"
+            autoFocus
             value={this.state.name}
             onChange={event => this.updateName(event.target.value)}
+            onPressEnter={() => this.clickStart()}
           />
         </InputName>
         <MarginItem>
@@ -102,9 +104,7 @@ class Home extends Component {
             loading={this.state.loading}
             disabled={this.state.loading || this.state.name === ''}
           >
-            <Link to="/quiz">
-              {this.state.button}
-            </Link>
+            {this.state.button}
           </Button>
         </MarginItem>
         <Copyright />
