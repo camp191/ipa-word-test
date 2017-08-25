@@ -10,6 +10,19 @@ const Line = styled.hr`
   border: 1px solid #E9E9E9;
 `
 
+const HintContainer = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`
+
+const QuizContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`
+
 class QuizCard extends Component {
   state = {
     visible: false,
@@ -28,29 +41,43 @@ class QuizCard extends Component {
   render() {
     return (
       <div>
-        <Card title={<h2>Quiz</h2>}>
+        <Card title="Quiz">
           <div>
             <IPA>{this.props.wordData.ipa}</IPA>
+            <Input
+              placeholder="คำตอบของคุณ"
+              autoFocus
+              size="large"
+              style={{marginTop: '1rem'}}
+            />
+            <Button 
+              size="large" 
+              type="primary" 
+              style={{width: '100%', margin: '1rem 0'}}
+            >
+              ตอบคำถาม
+            </Button>
           </div>
-          <Input
-            size="large"
-            placeholder="คำตอบของคุณ"
-            autoFocus
-          />
-          <Button type="primary">ตอบคำถาม</Button>
           <Line noshade />
-          <div>
+          <HintContainer>
             <p>คุณใช้คำใบ้ได้อีก 5 ครั้ง</p>
             <Popover
               content={this.props.wordData.word}
-              title="Hint"
+              title="Definition"
               trigger="click"
               visible={this.state.visible}
               onVisibleChange={this.handleVisibleChange}
             >
-              <Button type="primary" ghost>Hint</Button>
+              <Button
+                icon="question-circle-o"
+                type="danger"
+                size="large"
+                ghost
+              >
+                Hint
+              </Button>
             </Popover>
-          </div>
+          </HintContainer>
         </Card>
       </div>
     )
